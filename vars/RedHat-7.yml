@@ -1,0 +1,3 @@
+---
+
+pam_limitsd_path: /etc/security/limits.d

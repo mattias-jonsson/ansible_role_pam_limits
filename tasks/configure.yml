@@ -1,0 +1,17 @@
+---
+
+- name: configure PAM security limits
+  become: true
+  pam_limits:
+    dest: "{{ pam_limitsd_path }}/{{ item.0.order|string }}-{{ item.0.filename if (item.0.filename | splitext)[1] == '.conf' else (item.0.filename + '.conf') }}"
+    backup: "{{ item.1.backup }}"
+    comment: "{{ item.1.comment }}"
+    domain: "{{ item.1.domain }}"
+    limit_item: "{{ item.1.limit_item }}"
+    limit_type: "{{ item.1.limit_type }}"
+    use_max: "{{ item.1.use_max | default('no') }}"
+    use_min: "{{ item.1.use_min | default('no') }}"
+    value: "{{ item.1.value }}"
+  with_subelements: 
+  - "{{ ansible_role_pam_limits }}"
+  - settings
