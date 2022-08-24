@@ -1,59 +1,86 @@
-ansible_role_pam_limits
-==============
+Ansible Role: ansible_role_pam_limits
+=========
 
-This role performs the following actions:
+Configures PAM limits through configuraton files in /etc/security/limits.d on the following Linux distributions:
 
-* Configures PAM limits through configuraton files in /etc/security/limits.d
+<ul>
+<li>Red Hat Enterprise Linux 7
+</ul>
 
 Requirements
----------------
+------------
 
-This role has been tested on the following Operating Systems:
+None.
 
-* Red Hat Enterprise Linux 7
+Role Variables
+--------------
 
+Available variables are listed below:
 
-Role variables
----------------
+    filename:
 
-Variables used in the role:
+Name of the configuration file to hold limits configuration, the file will be created in `/etc/security/limits.d`.
 
-ansible_role_pam_limits:
-    - filename:
     order:
-    settings:
-    - domain:
-        backup:
-        comment:
-        limit_item:
-        limit_type:
-        value:
+
+Integer prefix for the file specified in `filename`.
+  
+    domain:
+
+What is the limit applied to, refer to `limits.conf.5` for valid values.
+
+    backup:
+
+Optionally backup the configuration file at changes, valid values are `yes` and `no`.
+
+    comment:
+
+Optional comment to describe the settings.
+
+    limit_item:
+
+Specifies which resource we are going to limit for the domain Refer to `limits.conf.5` for valid values.
+
+    limit_type:
+
+What type of limit `hard` or `soft`. Refer to `limits.conf.5` for additional explainations.
+
+    value:
+
+Value of the limit to be applied.
+
+Dependencies
+------------
+
+None.
+
+Example Playbook
+----------------
 
 
-`ansible_role_pam_limits` TODO Description  
-`filename` TODO Description  
-`order` TODO Description  
-`settings` TODO Description  
-`domain` TODO Description  
-`backup` TODO Description  
-`comment` TODO Description  
-`limit_item` TODO Description  
-`limit_type` TODO Description  
-`value` TODO Description
+    - hosts: servers
 
+      vars:
+        ansible_role_pam_limits:
+        - filename: example.conf
+          order: 99
+          settings:
+          - domain: '*'
+            backup: yes
+            comment: Example tuning
+            limit_item: core
+            limit_type: soft
+            value: unlimited
 
-Sample configuration
----------------
+      roles:
+         - ansible_role_pam_limits
 
-```yaml
-ansible_role_pam_limits:
-- filename: example.conf
-  order: 99
-  settings:
-  - domain: '*'
-    backup: yes
-    comment: Example tuning
-    limit_item: core
-    limit_type: soft
-    value: unlimited
-```
+License
+-------
+
+MIT
+
+Author Information
+------------------
+
+Mattias Jonsson
