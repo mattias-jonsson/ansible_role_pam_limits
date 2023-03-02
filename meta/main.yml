@@ -3,10 +3,10 @@
 galaxy_info:
   author: Mattias Jonsson
   description: Configures PAM limits through configuraton files in /etc/security/limits.d on supported distributions.
-  min_ansible_version: 2.9.27
+  min_ansible_version: 2.13.0
   role_name: ansible_role_pam_limits
   license: MIT
   platforms:
-  - name: EL
-    versions:
-    - "7"
+    - name: EL
+      versions:
+        - "7"
